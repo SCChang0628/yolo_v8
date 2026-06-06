@@ -1,78 +1,121 @@
-1. 訓練 YOLOv8實作
+# 訓練 YOLOv8實作
 
+```
 !pip install ultralytics
+```
 
+```
 from IPython import display
 display.clear_output()
 # prevent ultralytics from tracking your activity
 !yolo settings sync=False
 import ultralytics
 ultralytics.checks()
+```
 
+```
 from ultralytics import YOLO
 from IPython.display import display, Image
+```
 
+```
 from google.colab import drive
 drive.mount('/content/drive')
+```
 
+```
 train: /content/drive/MyDrive/yolov8/train/images
 val:  /content/drive/MyDrive/yolov8/valid/images
 test: /content/drive/MyDrive/yolov8/test/images
+```
 
+```
 model = YOLO('yolov8n.pt')
+```
 
+```
 results = model.train(data='/content/drive/MyDrive/yolov8/data.yaml', epochs=50, imgsz=640)
+```
 
+```
 from ultralytics import YOLO
 # 加載訓練好的模型
 model = YOLO("runs/detect/train-2/weights/best.pt")
 # 測試單張圖像
 results = model.predict(source="/content/yolo_2.jpg", save=True, imgsz=640)
 print(results)
+```
 
+```
 from ultralytics import YOLO
 # 加載訓練好的模型
 model = YOLO("runs/detect/train-2/weights/best.pt")
 # 測試文件夾中的多張圖像
 results = model.predict(source="/content", save=True, imgsz=640)
 print(results)
+```
 
+```
 from ultralytics import YOLO
 # 加載訓練好的模型
 model = YOLO("runs/detect/train-2/weights/best.pt")
 results = model.predict(source="/content/yolo_4.mp4", save=True, imgsz=640)
 print(results)
+```
 
+<br>
+<br>
 
-2. GitHub 下載專案實作
+# GitHub 下載專案實作
 
+```
 !git clone https://github.com/Marfbin/NEU-DET-with-yolov8.git
+```
 
+```
 %cd /content/NEU-DET-with-yolov8
+```
 
+```
 !pip install ultralytics
+```
 
+```
 from google.colab import drive 
 drive.mount('/content/drive')
+```
 
+```
 import os
+```
 
+```
 !unzip -q /content/drive/MyDrive/archive.zip -d /content/
+```
 
+```
 yaml_content = """
 train: /content/NEU-DET/train/images
 val: /content/NEU-DET/validation/images
+```
 
+```
 nc: 6
 names: ['crazing', 'inclusion', 'patches', 'pitted_surface', 'rolled-in_scale', 'scratches’]
 """
+```
 
+```
 with open('/content/NEU-DET-with-yolov8/data.yaml', 'w') as f:
     f.write(yaml_content)
+```
 
+```
 import torch
 from ultralytics import YOLO
+```
 
+```
 if not hasattr(torch, '_load_patched'):
     _original_load = torch.load
     def _patched_load(*args, **kwargs):
@@ -80,9 +123,13 @@ if not hasattr(torch, '_load_patched'):
         return _original_load(*args, **kwargs)
     torch.load = _patched_load
     torch._load_patched = True
+```
 
+```
 model = YOLO('yolov8n.pt')
+```
 
+```
 results = model.train(
     data='/content/NEU-DET-with-yolov8/data.yaml', 
     epochs=50, 
@@ -91,7 +138,9 @@ results = model.train(
     project='NEU_Defect_Detection', 
     name='yolov8_base'
 )
+```
 
+```
 import glob
 import os
 import matplotlib.pyplot as plt
@@ -113,3 +162,4 @@ for i, img_path in enumerate(predicted_images):
     plt.axis('off')
 plt.tight_layout()
 plt.show()
+```
