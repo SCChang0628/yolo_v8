@@ -40,7 +40,7 @@ results = model.train(data='/content/drive/MyDrive/yolov8/data.yaml', epochs=50,
 ```
 from ultralytics import YOLO
 # 加載訓練好的模型
-model = YOLO("runs/detect/train-2/weights/best.pt")
+model = YOLO("runs/detect/train/weights/best.pt")
 # 測試單張圖像
 results = model.predict(source="/content/yolo_2.jpg", save=True, imgsz=640)
 print(results)
@@ -49,7 +49,7 @@ print(results)
 ```
 from ultralytics import YOLO
 # 加載訓練好的模型
-model = YOLO("runs/detect/train-2/weights/best.pt")
+model = YOLO("runs/detect/train/weights/best.pt")
 # 測試文件夾中的多張圖像
 results = model.predict(source="/content", save=True, imgsz=640)
 print(results)
@@ -58,7 +58,7 @@ print(results)
 ```
 from ultralytics import YOLO
 # 加載訓練好的模型
-model = YOLO("runs/detect/train-2/weights/best.pt")
+model = YOLO("runs/detect/train/weights/best.pt")
 results = model.predict(source="/content/yolo_4.mp4", save=True, imgsz=640)
 print(results)
 ```
